@@ -18,11 +18,13 @@
  * For more info about namespaces plase @see http://php.net/manual/en/language.namespaces.importing.php
  */
 
+define('DS',DIRECTORY_SEPARATOR);
+
 // set a constant that holds the project's folder path, like "/var/www/".
 // DIRECTORY_SEPARATOR adds a slash to the end of the path
-define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
+define('ROOT', dirname(__DIR__) . DS);
 // set a constant that holds the project's "application" folder, like "/var/www/application".
-define('APP', ROOT . 'application' . DIRECTORY_SEPARATOR);
+define('APP', ROOT . 'application' . DS);
 
 // This is the auto-loader for Composer-dependencies (to load tools into your project).
 require ROOT . 'vendor/autoload.php';

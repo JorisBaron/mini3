@@ -54,4 +54,15 @@ class Helper
         return $raw_sql;
     }
 
+	/**
+	 * Converts dashed string to camel-case string
+	 * @param string|string[] $urlPart
+	 * @return string|string[]|null
+	 */
+	static public function dashToUpper($urlPart){
+		return preg_replace_callback('#-([a-z])#', function ($matches){
+			return strtoupper($matches[1]);
+		},$urlPart);
+	}
+
 }

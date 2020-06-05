@@ -1,5 +1,5 @@
 {
-    "name": "panique/mini3",
+    "name": "JorisBaron/mini3",
     "description": "MINI3 - an extremely simple naked PHP application",
     "type": "project",
     "license": "MIT",
@@ -11,10 +11,16 @@
         {
             "name": "John Dias",
             "email": "joaodias@noctus.org"
+        },
+        {
+            "name": "Joris Baron",
+            "email": "jooj@jooj.io"
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "ext-pdo": "*"
+    },
     "autoload":
     {
         "psr-4":

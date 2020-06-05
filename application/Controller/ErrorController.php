@@ -11,7 +11,7 @@
 
 namespace Mini\Controller;
 
-class ErrorController
+class ErrorController extends AbstractController
 {
     /**
      * PAGE: index
