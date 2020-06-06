@@ -20,8 +20,8 @@ class ErrorController extends AbstractController
     public function index()
     {
         // load views
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/error/index.php';
-        require APP . 'view/_templates/footer.php';
+        require APP.'view/_templates/header.phtml';
+        require APP.'view/error/index.phtml';
+        require APP.'view/_templates/footer.phtml';
     }
 }

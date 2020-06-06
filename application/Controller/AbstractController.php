@@ -4,8 +4,13 @@
 namespace Mini\Controller;
 
 
-abstract class AbstractController {
-	public function __construct() {
+use Mini\Core\Application;
 
+abstract class AbstractController {
+	/** @var Application */
+	protected $app;
+
+	public function __construct($app) {
+		$this->app = $app;
 	}
 }
