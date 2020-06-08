@@ -4,7 +4,7 @@
 namespace Mini\Controller;
 
 
-use Mini\Model\Application;
+use Mini\Core\Application;
 
 abstract class AbstractController {
 	/** @var Application */

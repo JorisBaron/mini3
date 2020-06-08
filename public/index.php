@@ -33,7 +33,7 @@ require ROOT . 'vendor/autoload.php';
 require APP . 'config/config.php';
 
 // load application class
-use Mini\Model\Application;
+use Mini\Core\Application;
 
 // start the application
 $app = new Application();

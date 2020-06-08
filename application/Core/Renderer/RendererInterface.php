@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Mini\Model\Renderer;
+namespace Mini\Core\Renderer;
 
 
-use Mini\Model\Application;
+use Mini\Core\Application;
 
 interface RendererInterface {
 	public function render(Application $app);
