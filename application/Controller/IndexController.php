@@ -11,9 +11,6 @@
 
 namespace Mini\Controller;
 
-use Mini\Core\Model;
-use Mini\Model\Modelle;
-
 class IndexController extends AbstractController
 {
     public function index()

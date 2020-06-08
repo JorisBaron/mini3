@@ -2,7 +2,7 @@
 /** For more info about namespaces plase @see http://php.net/manual/en/language.namespaces.importing.php */
 namespace Mini\Core;
 
-use Mini\Controller\AbstractController;
+use Exception;
 use Mini\Controller\ErrorController;
 use Mini\Core\Renderer\DefaultRenderer;
 use Mini\Core\Renderer\RendererInterface;
@@ -49,13 +49,13 @@ class Application
 	/**
 	 * @param $name
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __get($name) {
 		if(property_exists($this,$name))
 			return $this->$name;
 		else
-			throw new \Exception("Propriété non définie ou inaccessible");
+			throw new Exception("Propriété non définie ou inaccessible");
 	}
 
 	public function __isset($name) {
@@ -101,7 +101,7 @@ class Application
 
         //unknown controller or unknown action : 404 page
 		http_response_code(404);
-		$this->viewData = (new ErrorController($this))->index();
+		$this->viewData = (new ErrorController($this))->index() ?? [];
 		$this->view = 'error/index';
 		$this->renderer->render($this);
     }

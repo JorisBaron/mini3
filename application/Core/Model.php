@@ -3,6 +3,7 @@
 namespace Mini\Core;
 
 use PDO;
+use PDOException;
 
 class Model
 {
@@ -12,15 +13,16 @@ class Model
     public static $sDb = null;
     public $db = null;
 
-    /**
-     * Whenever model is created, open a database connection.
-     */
+	/**
+	 * Model constructor.
+	 * Design pattern Singleton
+	 */
     function __construct() {
 		if(!isset(self::$sDb)) {
 			try {
 				self::openDatabaseConnection();
 			}
-			catch(\PDOException $e) {
+			catch(PDOException $e) {
 				exit('Database connection could not be established.');
 			}
 		}

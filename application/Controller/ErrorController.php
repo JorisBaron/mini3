@@ -17,11 +17,6 @@ class ErrorController extends AbstractController
      * PAGE: index
      * This method handles the error page that will be shown when a page is not found
      */
-    public function index()
-    {
-        // load views
-        require APP.'view/_templates/header.phtml';
-        require APP.'view/error/index.phtml';
-        require APP.'view/_templates/footer.phtml';
+    public function index() {
     }
 }
