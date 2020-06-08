@@ -1,11 +1,11 @@
 <?php
 /** For more info about namespaces plase @see http://php.net/manual/en/language.namespaces.importing.php */
-namespace Mini\Core;
+namespace Mini\Model;
 
 use Exception;
 use Mini\Controller\ErrorController;
-use Mini\Core\Renderer\DefaultRenderer;
-use Mini\Core\Renderer\RendererInterface;
+use Mini\Model\Renderer\DefaultRenderer;
+use Mini\Model\Renderer\RendererInterface;
 use Mini\Libs\Helper;
 
 /**

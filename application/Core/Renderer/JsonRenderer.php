@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Mini\Core\Renderer;
+namespace Mini\Model\Renderer;
 
 
-use Mini\Core\Application;
+use Mini\Model\Application;
 
 class JsonRenderer implements RendererInterface {
 	public function render(Application $app) {

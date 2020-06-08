@@ -1,11 +1,11 @@
 <?php
 
-namespace Mini\Core;
+namespace Mini\Model;
 
 use PDO;
 use PDOException;
 
-abstract class AbstractModel
+class Model
 {
     /**
      * @var null Database Connection
