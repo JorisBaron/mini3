@@ -5,7 +5,7 @@ namespace Mini\Core;
 use PDO;
 use PDOException;
 
-class Model
+abstract class AbstractModel
 {
     /**
      * @var null Database Connection
