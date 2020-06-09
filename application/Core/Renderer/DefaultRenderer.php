@@ -9,7 +9,7 @@ use Mini\Core\Application;
 class DefaultRenderer implements RendererInterface {
 
 	public function render(Application $app) {
-		$view = empty($app->view) ? $app->urlPath : trim(trim($app->view), '/');
+		$view = trim(trim($app->view), '/');
 
 		$data = $app->viewData;
 		extract($data);

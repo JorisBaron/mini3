@@ -15,7 +15,6 @@ use Mini\Libs\Helper;
  * @property-read string $url_controller
  * @property-read string $url_action
  * @property-read array $url_params
- * @property-read string $urlPath
  * @property string $view
  * @property-read array $viewData
  * @property-read RendererInterface $renderer
@@ -33,9 +32,6 @@ class Application
 
     /** @var array URL parameters */
     private $url_params = [];
-
-	/** @var string controller/action */
-	private $urlPath;
 
 	/** @var string La vue qui sera appeler */
 	public $view;
@@ -79,19 +75,19 @@ class Application
         if (file_exists(APP . 'Controller/' . ucfirst($this->url_controller) . 'Controller.php')) {
 
             // if so, then load this file and create this controller
-            $controller = "\\Mini\\Controller\\" . ucfirst($this->url_controller) . 'Controller';
-            $this->url_controller = new $controller($this);
+            $strController = "\\Mini\\Controller\\" . ucfirst($this->url_controller) . 'Controller';
+            $controller = new $strController($this);
 
             // check for method: does such a method exist in the controller ?
-            if (method_exists($this->url_controller, $this->url_action) &&
-                is_callable(array($this->url_controller, $this->url_action))) {
+            if (method_exists($controller, $this->url_action) &&
+                is_callable(array($controller, $this->url_action))) {
                 
                 if (!empty($this->url_params)) {
                     // Call the method and pass arguments to it
-                    $this->viewData = call_user_func_array(array($this->url_controller, $this->url_action), $this->url_params) ?? [];
+                    $this->viewData = call_user_func_array(array($controller, $this->url_action), $this->url_params) ?? [];
                 } else {
                     // If no parameters are given, just call the method without parameters, like $this->home->method();
-					$this->viewData =  $this->url_controller->{$this->url_action}() ?? [];
+					$this->viewData = $controller->{$this->url_action}() ?? [];
                 }
 
 				$this->renderer->render($this);
@@ -141,7 +137,7 @@ class Application
 		$this->url_controller = Helper::dashToUpper($strController);
 		$this->url_action     = Helper::dashToUpper($strAction);
 
-		$this->view = $this->urlPath = trim($strController . '/' . $strAction,' /');
+		$this->view = trim($strController . '/' . $strAction,' /');
     }
 
 	/**
