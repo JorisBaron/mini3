@@ -69,25 +69,29 @@ class Application
 
         // create array with URL parts in $url
         $this->splitUrl();
+		$this->view = Helper::dashToUpper($this->url_controller . '/' . $this->url_action);
 
 
         // check for controller
-        if (file_exists(APP . 'Controller/' . ucfirst($this->url_controller) . 'Controller.php')) {
+
+		$strController = ucfirst(Helper::dashToUpper($this->url_controller));
+        if (file_exists(APP . 'Controller/' . $strController . 'Controller.php')) {
 
             // if so, then load this file and create this controller
-            $strController = "\\Mini\\Controller\\" . ucfirst($this->url_controller) . 'Controller';
+            $strController = "\\Mini\\Controller\\" . $strController . 'Controller';
             $controller = new $strController($this);
 
             // check for method: does such a method exist in the controller ?
-            if (method_exists($controller, $this->url_action) &&
-                is_callable(array($controller, $this->url_action))) {
+			$action = Helper::dashToUpper($this->url_action);
+            if (method_exists($controller, $action) &&
+                is_callable(array($controller, $action))) {
                 
                 if (!empty($this->url_params)) {
                     // Call the method and pass arguments to it
-                    $this->viewData = call_user_func_array(array($controller, $this->url_action), $this->url_params) ?? [];
+                    $this->viewData = call_user_func_array(array($controller, $$action), $this->url_params) ?? [];
                 } else {
                     // If no parameters are given, just call the method without parameters, like $this->home->method();
-					$this->viewData = $controller->{$this->url_action}() ?? [];
+					$this->viewData = $controller->{$action}() ?? [];
                 }
 
 				$this->renderer->render($this);
@@ -115,8 +119,8 @@ class Application
             $url = explode('/', $url);
 
             // Put URL parts into according properties
-			$strController = $url[0] ?? self::DEFAULT_CONTROLLER;
-			$strAction     = $url[1] ?? self::DEFAULT_ACTION;
+			$this->url_controller = trim($url[0] ?? self::DEFAULT_CONTROLLER);
+			$this->url_action     = trim($url[1] ?? self::DEFAULT_ACTION);
 
             // Remove controller and action from the split URL
             unset($url[0], $url[1]);
@@ -130,14 +134,9 @@ class Application
             //echo 'Parameters: ' . print_r($this->url_params, true) . '<br>';
         }
 		else {
-			$strController = self::DEFAULT_CONTROLLER;
-			$strAction     = self::DEFAULT_ACTION;
+			$this->url_controller = self::DEFAULT_CONTROLLER;
+			$this->url_action     = self::DEFAULT_ACTION;
 		}
-
-		$this->url_controller = Helper::dashToUpper($strController);
-		$this->url_action     = Helper::dashToUpper($strAction);
-
-		$this->view = trim($strController . '/' . $strAction,' /');
     }
 
 	/**
