@@ -4,8 +4,8 @@ namespace Mini\Core;
 
 use Exception;
 use Mini\Controller\ErrorController;
-use Mini\Core\Renderer\DefaultRenderer;
-use Mini\Core\Renderer\RendererInterface;
+use Mini\Renderer\DefaultRenderer;
+use Mini\Renderer\RendererInterface;
 use Mini\Libs\Helper;
 
 /**
@@ -75,7 +75,7 @@ class Application
         // check for controller
 
 		$strController = ucfirst(Helper::dashToUpper($this->url_controller));
-        if (file_exists(APP . 'Controller/' . $strController . 'Controller.php')) {
+        if (file_exists(APP . '/Controller/' . $strController . 'Controller.php')) {
 
             // if so, then load this file and create this controller
             $strController = "\\Mini\\Controller\\" . $strController . 'Controller';

@@ -14,9 +14,9 @@
 			crossorigin="anonymous"></script>
 
 
-	<script src="<?=URL?>js/_template.js"></script>
-	<?php if(file_exists(ROOT . 'public/js/' . $app->view . '.js')) : ?>
-		<script src="<?= URL . 'js/' . $app->view . '.js' ?>"></script>
+	<script src="<?=URL?>/js/_template.js"></script>
+	<?php if(file_exists(ROOT . '/public/js/' . $app->view . '.js')) : ?>
+		<script src="<?=URL?>/js/<?=$app->view?>.js"></script>
 	<?php endif; ?>
 </body>
 </html>

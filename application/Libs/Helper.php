@@ -65,4 +65,23 @@ class Helper
 		},$urlPart);
 	}
 
+	/**
+	 * Redirects to specified URL
+	 * @param string $url
+	 * @param int $statusCode
+	 */
+	static public function redirect(string $url, $statusCode = 303) {
+		header('Location: '.$url, true, $statusCode);
+		die();
+	}
+
+	/**
+	 * Escape a string
+	 * @param $string
+	 * @return string escaped string
+	 */
+	public static function e($string){
+		return htmlspecialchars($string, ENT_QUOTES);
+	}
+
 }

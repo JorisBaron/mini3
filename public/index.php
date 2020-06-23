@@ -21,16 +21,28 @@
 define('DS',DIRECTORY_SEPARATOR);
 
 // set a constant that holds the project's folder path, like "/var/www/".
-// DIRECTORY_SEPARATOR adds a slash to the end of the path
-define('ROOT', dirname(__DIR__) . DS);
+define('ROOT', dirname(__DIR__));
+
 // set a constant that holds the project's "application" folder, like "/var/www/application".
-define('APP', ROOT . 'application' . DS);
+define('APP', ROOT . '/application');
+
+// URL
+define('URL_PUBLIC_FOLDER', 'public');
+define('URL_PROTOCOL', '//');
+define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
+define('URL_SUB_FOLDER', rtrim(str_replace(URL_PUBLIC_FOLDER, '', dirname($_SERVER['SCRIPT_NAME'])), '/'));
+define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 
 // This is the auto-loader for Composer-dependencies (to load tools into your project).
-require ROOT . 'vendor/autoload.php';
+require ROOT . '/vendor/autoload.php';
 
 // load application config (error reporting etc.)
-require APP . 'config/config.php';
+define('CONFIG', require APP . '/config/config.php');
+
+if (CONFIG['env'] == 'development' || CONFIG['env'] == 'dev') {
+	error_reporting(E_ALL);
+	ini_set("display_errors", 1);
+}
 
 // load application class
 use Mini\Core\Application;

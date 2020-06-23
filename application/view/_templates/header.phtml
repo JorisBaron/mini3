@@ -12,9 +12,9 @@
 		  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 		  crossorigin="anonymous">
 
-	<link href="<?=URL?>css/_template.css" rel="stylesheet">
-	<?php if(file_exists(ROOT . 'public/css/' . $app->view . '.css')) : ?>
-		<link rel="stylesheet" href="<?= URL . 'css/' . $app->view . '.css' ?>" type="text/css">
+	<link href="<?=URL?>/css/_template.css" rel="stylesheet">
+	<?php if(file_exists(ROOT . '/public/css/' . $app->view . '.css')) : ?>
+		<link rel="stylesheet" href="<?= URL?>/css/<?=$app->view?>.css" type="text/css">
 	<?php endif; ?>
 </head>
 <body>

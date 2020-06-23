@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Mini\Core\Renderer;
+namespace Mini\Renderer;
 
 
 use Mini\Core\Application;
