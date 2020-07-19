@@ -17,10 +17,12 @@
             "email": "jooj@jooj.io"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
+        "php" : ">=7.0",
         "ext-pdo": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "doctrine/dbal": "^2.10"
     },
     "autoload":
     {

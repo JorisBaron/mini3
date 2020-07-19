@@ -37,12 +37,16 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 require ROOT . '/vendor/autoload.php';
 
 // load application config (error reporting etc.)
-define('CONFIG', require APP . '/config/config.php');
+define('CONFIG', require APP.DS.'config'.DS.'config.php');
 
 if (CONFIG['env'] == 'development' || CONFIG['env'] == 'dev') {
 	error_reporting(E_ALL);
 	ini_set("display_errors", 1);
 }
+
+//session
+session_set_cookie_params(['path'=> URL_SUB_FOLDER, 'httponly'=>true]);
+session_start();
 
 // load application class
 use Mini\Core\Application;

@@ -13,4 +13,6 @@ abstract class AbstractController {
 	public function __construct($app) {
 		$this->app = $app;
 	}
+
+	abstract function index();
 }

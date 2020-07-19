@@ -3,35 +3,36 @@
 namespace Mini\Core;
 
 use Exception;
+use Mini\Controller\AbstractController;
 use Mini\Controller\ErrorController;
+use Mini\Entity\UserEntity;
 use Mini\Renderer\DefaultRenderer;
 use Mini\Renderer\RendererInterface;
 use Mini\Libs\Helper;
+use Mini\Repository\UserRepository;
 
 /**
  * Class Application
  * @package Mini\Core
  *
- * @property-read string $url_controller
- * @property-read string $url_action
- * @property-read array $url_params
+
+ * @property-read Router $router
+ * @property-read Authenticator $auth
+ * @property-read UserEntity $user
  * @property string $view
  * @property-read array $viewData
  * @property-read RendererInterface $renderer
  */
 class Application
 {
-	const DEFAULT_CONTROLLER = 'index';
-	const DEFAULT_ACTION     = 'index';
+	/** @var Router */
+	private $router;
 
-    /** @var string The controller */
-    private $url_controller;
+	/** @var Authenticator */
+	private $auth;
 
-    /** @var string The method (of the above controller), often also named "action" */
-    private $url_action;
-
-    /** @var array URL parameters */
-    private $url_params = [];
+	/** @var UserEntity */
+	private $user;
 
 	/** @var string La vue qui sera appeler */
 	public $view;
@@ -66,33 +67,23 @@ class Application
     public function __construct()
     {
     	$this->setRenderer(new DefaultRenderer());
+    	$this->auth = new Authenticator();
+    	$repoUser = new UserRepository();
+    	$this->user = $repoUser->getById($this->auth->getUserId()) ?: new UserEntity();
 
-        // create array with URL parts in $url
-        $this->splitUrl();
-		$this->view = Helper::dashToUpper($this->url_controller . '/' . $this->url_action);
+		$this->router = new Router($_GET['url']??null);
+		$this->view = $this->view = $this->router->controllerUrl.'/'.$this->router->actionUrl;
 
 
         // check for controller
+        if (class_exists($this->router->controller)) {
 
-		$strController = ucfirst(Helper::dashToUpper($this->url_controller));
-        if (file_exists(APP . '/Controller/' . $strController . 'Controller.php')) {
+            $controller = new $this->router->controller($this);
 
-            // if so, then load this file and create this controller
-            $strController = "\\Mini\\Controller\\" . $strController . 'Controller';
-            $controller = new $strController($this);
-
-            // check for method: does such a method exist in the controller ?
-			$action = Helper::dashToUpper($this->url_action);
-            if (method_exists($controller, $action) &&
-                is_callable(array($controller, $action))) {
+            if (method_exists($controller, $this->router->action) &&
+                is_callable(array($controller, $this->router->action))) {
                 
-                if (!empty($this->url_params)) {
-                    // Call the method and pass arguments to it
-                    $this->viewData = call_user_func_array(array($controller, $$action), $this->url_params) ?? [];
-                } else {
-                    // If no parameters are given, just call the method without parameters, like $this->home->method();
-					$this->viewData = $controller->{$action}() ?? [];
-                }
+            	$this->viewData = call_user_func_array([$controller, $this->router->action], $this->router->params) ?? [];
 
 				$this->renderer->render($this);
 				return;
@@ -101,7 +92,7 @@ class Application
 
         //unknown controller or unknown action : 404 page
 		http_response_code(404);
-		$this->viewData = (new ErrorController($this))->index() ?? [];
+		$this->viewData = (new ErrorController($this))->error404() ?? [];
 		$this->view = 'error/index';
 		$this->renderer->render($this);
     }
